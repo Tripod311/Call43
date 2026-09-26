@@ -1,0 +1,31 @@
+{
+  "name": "call43",
+  "version": "1.0.0",
+  "description": "Simple webrtc voice/video chat server for 2-5 people",
+  "keywords": [
+    "webrtc",
+    "ts"
+  ],
+  "license": "ISC",
+  "author": "Tripod ind.tripod@gmail.com",
+  "type": "module",
+  "main": "server_dist/index.js",
+  "scripts": {
+    "build:server": "tsc -p tsconfig.server.json",
+    "build:client": "vite build",
+    "build": "npm run build:server && npm run build:client",
+    "start": "node server_dist/index.js"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.3",
+    "@types/ws": "^8.18.1",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.1"
+  },
+  "dependencies": {
+    "@tripod311/currents": "^0.2.0",
+    "@tripod311/splash": "^0.1.0",
+    "dotenv": "^18.0.4",
+    "ws": "^8.21.3"
+  }
+}
