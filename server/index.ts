@@ -10,10 +10,10 @@ const POLL_INTERVAL = 1000;
 
 const adapter = NodeAdapter.fromOptions({
 	forceHTTPVersion: 1,
-	// certificates: {
-	// 	cert: "./certificates/fullchain.crt",
-	// 	key: "./certificates/server.key",
-	// }
+	certificates: {
+		cert: "./certificates/server.crt",
+		key: "./certificates/server.key",
+	}
 });
 const app = new Currents(adapter);
 
