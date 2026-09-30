@@ -45,10 +45,12 @@ class Application extends Component {
 	private grid?: HTMLElement;
 	private pendingConnection = false;
 	private selfId = -1;
+	private muted: boolean = false;
 
 	mounted() {
 		super.mounted();
 		this.refs.button.onclick = this.connect.bind(this);
+		this.refs.selfVideo.onclick = this.toggleMute.bind(this);
 		this.showMessage("Чтобы начать звонок, введи пароль и подключись к комнате");
 	}
 
@@ -89,6 +91,8 @@ class Application extends Component {
 				audio: true,
 				video: true
 			});
+
+			this.refs.selfVideo.srcObject = this.localStream;
 		} catch (err) {
 			if (err instanceof DOMException && err.name === "NotFoundError") {
 				this.localStream = await navigator.mediaDevices.getUserMedia({
@@ -290,6 +294,14 @@ class Application extends Component {
 			}
 		} catch (err) {
 			console.error("Message error:", err);
+		}
+	}
+
+	toggleMute () {
+		this.muted = !this.muted;
+
+		for (const track of this.localStream.getTracks()) {
+			track.enabled = !this.muted;
 		}
 	}
 }

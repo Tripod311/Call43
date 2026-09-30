@@ -111,3 +111,22 @@ input:focus-visible, button:focus-visible { outline: 2px solid #a9d7ff; outline-
   .connect-form input { flex: 1; min-width: 0; width: auto; }
   .video-grid { grid-template-columns: minmax(0, 1fr); }
 }
+
+.self-video {
+    cursor: pointer;
+    position: fixed;
+    right: calc(12px + env(safe-area-inset-right, 0px));
+    bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+    z-index: 1000;
+
+    width: clamp(100px, 28vw, 220px);
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+
+    background: #111;
+    border: 1px solid rgb(255 255 255 / 25%);
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgb(0 0 0 / 35%);
+
+    transform: scaleX(-1);
+}
