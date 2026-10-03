@@ -112,21 +112,75 @@ input:focus-visible, button:focus-visible { outline: 2px solid #a9d7ff; outline-
   .video-grid { grid-template-columns: minmax(0, 1fr); }
 }
 
-.self-video {
-    cursor: pointer;
+.self-preview {
     position: fixed;
     right: calc(12px + env(safe-area-inset-right, 0px));
     bottom: calc(12px + env(safe-area-inset-bottom, 0px));
     z-index: 1000;
 
     width: clamp(100px, 28vw, 220px);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.self-video {
+    display: block;
+    cursor: pointer;
+    width: 100%;
     aspect-ratio: 4 / 3;
     object-fit: cover;
 
     background: #111;
     border: 1px solid rgb(255 255 255 / 25%);
     border-radius: 12px;
+    box-sizing: border-box;
     box-shadow: 0 4px 20px rgb(0 0 0 / 35%);
 
     transform: scaleX(-1);
+}
+
+.self-controls {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.self-control {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    padding: 10px;
+
+    cursor: pointer;
+    color: #fff;
+    background: #222;
+    border: 1px solid rgb(255 255 255 / 25%);
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 25%);
+}
+
+.self-control:hover {
+    background: #333;
+}
+
+.self-control:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 3px;
+}
+
+.self-control svg {
+    width: 24px;
+    height: 24px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* Добавляй этот класс, когда микрофон или камера выключены. */
+.self-control.is-off {
+    background: #b32626;
 }

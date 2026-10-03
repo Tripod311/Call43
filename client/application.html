@@ -12,11 +12,33 @@
         
     </main>
 
-    <video
-        data-ref="selfVideo"
-        class="self-video"
-        autoplay
-        muted
-        playsinline
-    ></video>
+    <div data-style='selfVideo' class="self-preview">
+        <video
+            data-ref="selfVideo"
+            class="self-video"
+            autoplay
+            muted
+            playsinline
+        ></video>
+
+        <div class="self-controls">
+            <button
+                data-ref="microphoneButton"
+                class="self-control"
+                type="button"
+                aria-label="Выключить микрофон"
+            >
+                <img data-prop-src="micButton" style="width: 24px; height: 24px" />
+            </button>
+
+            <button
+                data-ref="cameraButton"
+                class="self-control"
+                type="button"
+                aria-label="Выключить камеру"
+            >
+                <img data-prop-src="camButton" style="width: 24px; height: 24px" />
+            </button>
+        </div>
+    </div>
 </div>

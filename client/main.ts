@@ -9,6 +9,11 @@ TemplateCache.registerDrop("VideoDrop", VideoDrop);
 TemplateCache.registerDrop("MessageDrop", MessageDrop);
 TemplateCache.registerDrop("VideoGridDrop", VideoGridDrop);
 
+import MicImage from "./images/microphone.svg"
+import CamImage from "./images/camera.svg"
+import MicCrossImage from "./images/microphone-cross.svg"
+import CamCrossImage from "./images/camera-cross.svg"
+
 const ICEServers = [
 	{
         "urls": [
@@ -45,12 +50,18 @@ class Application extends Component {
 	private grid?: HTMLElement;
 	private pendingConnection = false;
 	private selfId = -1;
-	private muted: boolean = false;
 
 	mounted() {
 		super.mounted();
+
+		this.state.setProp("selfVideo", {
+			display: "none"
+		});
+		this.state.setProp("micButton", MicCrossImage);
+		this.state.setProp("camButton", CamCrossImage);
 		this.refs.button.onclick = this.connect.bind(this);
-		this.refs.selfVideo.onclick = this.toggleMute.bind(this);
+		this.refs.microphoneButton.onclick = this.toggleSound.bind(this);
+		this.refs.cameraButton.onclick = this.toggleVideo.bind(this);
 		this.showMessage("Чтобы начать звонок, введи пароль и подключись к комнате");
 	}
 
@@ -93,6 +104,10 @@ class Application extends Component {
 			});
 
 			this.refs.selfVideo.srcObject = this.localStream;
+			this.state.setProp("selfVideo", {
+				display: "flex"
+			});
+			this.syncButtons();
 		} catch (err) {
 			if (err instanceof DOMException && err.name === "NotFoundError") {
 				this.localStream = await navigator.mediaDevices.getUserMedia({
@@ -298,10 +313,47 @@ class Application extends Component {
 	}
 
 	toggleMute () {
-		this.muted = !this.muted;
-
 		for (const track of this.localStream.getTracks()) {
 			track.enabled = !this.muted;
+		}
+	}
+
+	syncButtons () {
+		for (const track of this.localStream.getTracks()) {
+			if (track.kind === 'audio') {
+				this.state.setProp("micButton", MicImage);
+			}
+			if (track.kind === 'video') {
+				this.state.setProp("camButton", CamImage);
+			}
+		}
+	}
+
+	toggleSound () {
+		for (const track of this.localStream.getTracks()) {
+			if (track.kind === 'audio') {
+				track.enabled = !track.enabled;
+
+				if (track.enabled) {
+					this.state.setProp("micButton", MicImage);
+				} else {
+					this.state.setProp("micButton", MicCrossImage);
+				}
+			}
+		}
+	}
+
+	toggleVideo () {
+		for (const track of this.localStream.getTracks()) {
+			if (track.kind === 'video') {
+				track.enabled = !track.enabled;
+
+				if (track.enabled) {
+					this.state.setProp("camButton", CamImage);
+				} else {
+					this.state.setProp("camButton", CamCrossImage);
+				}
+			}
 		}
 	}
 }
